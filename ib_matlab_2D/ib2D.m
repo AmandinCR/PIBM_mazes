@@ -12,31 +12,29 @@ myVideo = VideoWriter('video.mp4', 'MPEG-4');
 open(myVideo)
 for clock=1:clockmax
   % target points
-  V=V-(1/(2*m))*K*(Z-X)*dt;
-  V(:,2)=V(:,2)-(1/2)*grav*dt;
-  Z=Z+V*dt;
+  %V=V-(1/(2*m))*K*(Z-X)*dt;
+  %V(:,2)=V(:,2)-(1/2)*grav*dt;
+  %Z=Z+V*dt;
   
   % the water
-  XX=X+dt*interp(u,X,Nb,h,N); % equation (4)
-  FF=K*(Z-XX); % equation (5)
-  ff=spread(FF,XX,Nb,N,h); % equation (3)
-  [u,uu]=fluid(u,ff,h,ip,im,a,dt,rho,mu); % equation (1), (2)
-  X=X+dt*interp(uu,XX,Nb,h,N); % equation (4)
-  
-  %u(4,29,2) = -20;
+  X=X+dt*interp(u,X,Nb,h,N); % equation (4)
+  %FF=K*(Z-XX); % equation (5)
+  %ff=spread(FF,XX,Nb,N,h); % equation (3)
+  %[u,uu]=fluid(u,ff,h,ip,im,a,dt,rho,mu); % equation (1), (2)
+  %X=X+dt*interp(uu,XX,Nb,h,N); % equation (4)
 
   % the wall
   XX2=X2+(dt/2)*interp(u,X2,Nb2,h,N); % equation (4)
   FF2=K2*(Z2-XX2); % equation (5)
   ff2=spread(FF2,XX2,Nb2,N,h); % equation (3)
   
-  %ff2(:,:,2)= ff2(:,:,2) - 100.0;
+  ff2(:,:,2)= ff2(:,:,2) - 100.0; % external body force
 
   [u,uu]=fluid(u,ff2,h,ip,im,a,dt,rho,mu); % equation (1), (2)
   X2=X2+dt*interp(uu,XX2,Nb2,h,N); % equation (4)
 
   %animation:
-  if mod(clock,500) == 0
+  if mod(clock,100) == 0
       clf;
       quiver(xgrid,ygrid,u(:,:,1),u(:,:,2))
 

@@ -27,7 +27,7 @@ grav=0.2; % gravity
 rho=1; % fluid pressure
 mu=0.1; % fluid parameter
 tmax=5; % total time to simulate
-dt=0.00005; % time stepping
+dt=0.0001; % time stepping
 clockmax=ceil(tmax/dt);
 
 Ntemp=1*N/size(maze,1); % twice as many boundary points per fluid point ?
